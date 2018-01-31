@@ -1,0 +1,38 @@
+<?php
+
+namespace Alpadia\Models\Repositories;
+
+use Alpadia\Models\Entities\Member as Member;
+use Alpadia\Models\Factories\MemberFactory as MemberFactory;
+use Illuminate\Database\Query\Builder;
+
+class MemberModel
+{
+    protected $db;
+    protected $table = 'members';
+
+    public function __construct($db)
+    {
+        $this->db = $db->table($this->table);
+    }
+
+    public function get()
+    {
+        $collection = $this->db->get();
+
+        $members = $collection->map(function ($member) {
+            return MemberFactory::createFromMap($member);
+        });
+
+        return $members;
+    }
+
+    public function insert(Member $data) : Member
+    {
+        $id = $this->db->insertGetId( get_object_vars($data) );
+        $data->id = $id;
+        return $data;
+    }
+}
+
+?>
