@@ -20,6 +20,11 @@ class MemberController
         return $this->Member->insert($member);
     }
 
+    public function delete(int $id)
+    {
+        return $this->Member->delete($id);
+    }
+
     public function find(int $id)
     {
         return $this->Member->find($id);

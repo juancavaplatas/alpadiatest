@@ -8,14 +8,16 @@ use Alpadia\Controllers\VideogameController as VideogameController;
 use Alpadia\Utils\ErrorHandler as ErrorHandler;
 
 // Routes
-// GET =========================================================================
-$app->get('/members', function (Request $request, Response $response, array $args) {
+// DELETE ======================================================================
+$app->delete('/members/{id}', function (Request $request, Response $response, array $args) {
 
     try {
-        $code = 200;
+        $code = 400;
         $memberController = new MemberController($this->db);
-        $members = $memberController->get();
-        $response = $response->withJson($members, $code);
+        if ($memberController->delete((int)$args["id"])) {
+            $code = 200;
+        }
+        $response = $response->withStatus($code);
 
     } catch (\Throwable $e) {
         $code = 500;
@@ -27,6 +29,27 @@ $app->get('/members', function (Request $request, Response $response, array $arg
     return $response;
 });
 
+$app->delete('/videogames/{id}', function (Request $request, Response $response, array $args) {
+
+    try {
+        $code = 400;
+        $videogameController = new VideogameController($this->db);
+        if ($videogameController->delete((int)$args["id"])) {
+            $code = 200;
+        }
+        $response = $response->withStatus($code);
+
+    } catch (\Throwable $e) {
+        $code = 500;
+        $error = ErrorHandler::getErrorMessage($e);
+        $response = $response->withJson($error, $code);
+    }
+
+    // return response
+    return $response;
+});
+
+// GET =========================================================================
 $app->get('/members/{id}', function (Request $request, Response $response, array $args) {
 
     try {
@@ -45,13 +68,13 @@ $app->get('/members/{id}', function (Request $request, Response $response, array
     return $response;
 });
 
-$app->get('/videogames', function (Request $request, Response $response, array $args) {
+$app->get('/members', function (Request $request, Response $response, array $args) {
 
     try {
         $code = 200;
-        $videogameController = new VideogameController($this->db);
-        $videogames = $videogameController->get();
-        $response = $response->withJson($videogames, $code);
+        $memberController = new MemberController($this->db);
+        $members = $memberController->get();
+        $response = $response->withJson($members, $code);
 
     } catch (\Throwable $e) {
         $code = 500;
@@ -70,6 +93,24 @@ $app->get('/videogames/{id}', function (Request $request, Response $response, ar
         $videogameController = new VideogameController($this->db);
         $videogame = $videogameController->find((int)$args["id"]);
         $response = $response->withJson($videogame, $code);
+
+    } catch (\Throwable $e) {
+        $code = 500;
+        $error = ErrorHandler::getErrorMessage($e);
+        $response = $response->withJson($error, $code);
+    }
+
+    // return response
+    return $response;
+});
+
+$app->get('/videogames', function (Request $request, Response $response, array $args) {
+
+    try {
+        $code = 200;
+        $videogameController = new VideogameController($this->db);
+        $videogames = $videogameController->get();
+        $response = $response->withJson($videogames, $code);
 
     } catch (\Throwable $e) {
         $code = 500;

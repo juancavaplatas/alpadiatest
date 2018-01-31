@@ -39,6 +39,7 @@ CREATE TABLE `members` (
 LOCK TABLES `members` WRITE;
 /*!40000 ALTER TABLE `members` DISABLE KEYS */;
 INSERT INTO `members` VALUES (1,'Juan','Cava','2017-01-01 00:00:00','2017-01-01 00:00:00');
+INSERT INTO `members` VALUES (2,'Ricardo','Navarro','2017-01-01 00:00:00','2017-01-01 00:00:00');
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 UNLOCK TABLES;
 --
@@ -92,6 +93,7 @@ CREATE TABLE `videogames` (
 LOCK TABLES `videogames` WRITE;
 /*!40000 ALTER TABLE `videogames` DISABLE KEYS */;
 INSERT INTO `videogames` VALUES (1,'Sonic the Hedgehog','2017-01-01 00:00:00','2017-01-01 00:00:00');
+INSERT INTO `videogames` VALUES (2,'Megaman','2017-01-01 00:00:00','2017-01-01 00:00:00');
 /*!40000 ALTER TABLE `videogames` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

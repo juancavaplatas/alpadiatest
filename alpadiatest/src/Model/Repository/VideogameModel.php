@@ -16,6 +16,11 @@ class VideogameModel
         $this->db = $db->table($this->table);
     }
 
+    public function delete(int $id)
+    {
+        return $this->db->delete($id);
+    }
+
     public function find(int $id)
     {
         $videogame = $this->db->find($id);

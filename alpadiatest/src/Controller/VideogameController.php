@@ -20,6 +20,11 @@ class VideogameController
         return $this->Videogame->insert($videogame);
     }
 
+    public function delete(int $id)
+    {
+        return $this->Videogame->delete($id);
+    }
+
     public function find(int $id)
     {
         return $this->Videogame->find($id);

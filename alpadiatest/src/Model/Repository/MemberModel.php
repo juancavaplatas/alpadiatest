@@ -16,6 +16,11 @@ class MemberModel
         $this->db = $db->table($this->table);
     }
 
+    public function delete(int $id)
+    {
+        return $this->db->delete($id);
+    }
+
     public function find(int $id)
     {
         $member = $this->db->find($id);
