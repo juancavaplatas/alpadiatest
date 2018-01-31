@@ -8,11 +8,14 @@ class ErrorHandler
 {
     public static function getErrorMessage(Throwable $e) : array
     {
-        return [
+        $error = [
             "message" => $e->getMessage(),
             "file" => $e->getFile(),
             "line" => $e->getLine()
         ];
+        print_r($error);
+        exit;
+        return $error;
     }
 }
 

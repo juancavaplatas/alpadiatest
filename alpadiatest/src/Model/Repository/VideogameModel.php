@@ -47,6 +47,13 @@ class VideogameModel
         $data->id = $id;
         return $data;
     }
+
+    public function update(Member $data) : Member
+    {
+        $id = $this->db->update( get_object_vars($data) );
+        $data->id = $id;
+        return $data;
+    }
 }
 
 ?>

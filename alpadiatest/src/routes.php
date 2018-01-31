@@ -122,6 +122,27 @@ $app->get('/videogames', function (Request $request, Response $response, array $
     return $response;
 });
 
+// PATCH =======================================================================
+$app->patch('/members/{id}', function (Request $request, Response $response, array $args) {
+
+    try {
+        $code = 200;
+        $postData = $request->getParsedBody();
+        $memberController = new MemberController($this->db);
+        $members = $memberController->update((int)$args["id"], $postData);
+        $response = $response->withJson($members, $code);
+
+    } catch (\Throwable $e) {
+        $code = 500;
+        $error = ErrorHandler::getErrorMessage($e);
+        $response = $response->withJson($error, $code);
+    }
+
+    // return response
+    return $response;
+});
+
+
 // POST ========================================================================
 $app->post('/members', function (Request $request, Response $response, array $args) {
 

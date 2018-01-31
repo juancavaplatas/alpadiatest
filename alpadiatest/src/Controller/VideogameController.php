@@ -34,6 +34,13 @@ class VideogameController
     {
         return $this->Videogame->get();
     }
+
+    public function update(int $id, array $data)
+    {
+        $videogame = VideogameFactory::createFromArray($data);
+        $videogame->id = $id;
+        return $this->Videogame->update($videogame);
+    }
 }
 
 ?>
