@@ -16,14 +16,23 @@ class MemberModel
         $this->db = $db->table($this->table);
     }
 
+    public function find(int $id)
+    {
+        $member = $this->db->find($id);
+        return MemberFactory::createFromMap($member);
+    }
+
     public function get()
     {
+        // get collection
         $collection = $this->db->get();
 
+        // Map collection to member entity
         $members = $collection->map(function ($member) {
             return MemberFactory::createFromMap($member);
         });
 
+        // return members
         return $members;
     }
 

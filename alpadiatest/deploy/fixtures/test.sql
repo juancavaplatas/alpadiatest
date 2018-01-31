@@ -38,9 +38,9 @@ CREATE TABLE `members` (
 
 LOCK TABLES `members` WRITE;
 /*!40000 ALTER TABLE `members` DISABLE KEYS */;
+INSERT INTO `members` VALUES (1,'Juan','Cava','2017-01-01 00:00:00','2017-01-01 00:00:00');
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 UNLOCK TABLES;
-
 --
 -- Table structure for table `members_videogames`
 --

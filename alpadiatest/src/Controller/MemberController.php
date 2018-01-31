@@ -20,9 +20,14 @@ class MemberController
         return $this->Member->insert($member);
     }
 
+    public function find(int $id)
+    {
+        return $this->Member->find($id);
+    }
+
     public function get()
     {
-
+        return $this->Member->get();
     }
 }
 
