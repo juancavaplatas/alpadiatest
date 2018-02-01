@@ -10,6 +10,13 @@ use Illuminate\Database\QueryException as QueryException;
 
 class GameRepository extends Repository implements RepositoryInterface
 {
+    /**
+     * Add new game
+     *
+     * @param array $data Game data
+     *
+     * @return array Game added
+     */
     public function add(array $data) : array
     {
         $game = GameFactory::createFromArray($data);
@@ -26,6 +33,13 @@ class GameRepository extends Repository implements RepositoryInterface
         return [];
     }
 
+    /**
+     * Delete a game
+     *
+     * @param int $id Game id
+     *
+     * @return int 1 if deleted
+     */
     public function delete(int $id) : int
     {
         $game = Game::where(["id"=>$id])->first();
@@ -35,6 +49,13 @@ class GameRepository extends Repository implements RepositoryInterface
         return 0;
     }
 
+    /**
+     * Find a game
+     *
+     * @param int $id Game id
+     *
+     * @return array Game data
+     */
     public function find(int $id) : array
     {
         $game = Game::where(["id"=>$id])->first();
@@ -44,11 +65,24 @@ class GameRepository extends Repository implements RepositoryInterface
         return [];
     }
 
+    /**
+     * Get all games
+     *
+     * @return array Game collection
+     */
     public function get() : array
     {
         return Game::get()->toArray();
     }
 
+    /**
+     * Update game data
+     *
+     * @param int $id Game unique id
+     * @param array $data Game new data
+     *
+     * @return array Game data
+     */
     public function update(int $id, array $data) : array
     {
         try {

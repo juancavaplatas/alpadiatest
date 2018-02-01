@@ -11,6 +11,13 @@ use Illuminate\Database\QueryException as QueryException;
 
 class MemberRepository extends Repository implements RepositoryInterface
 {
+    /**
+     * Add new member
+     *
+     * @param array $data Member data
+     *
+     * @return array Member added
+     */
     public function add(array $data) : array
     {
         $member = MemberFactory::createFromArray($data);
@@ -26,6 +33,14 @@ class MemberRepository extends Repository implements RepositoryInterface
         return [];
     }
 
+    /**
+     * Add game to member collection
+     *
+     * @param int $id Member id
+     * @param int $game_id Game id
+     *
+     * @return int 1 if added
+     */
     public function addGame(int $id, int $game_id) : int
     {
         $member = Member::where(["id"=>$id])->first();
@@ -36,6 +51,13 @@ class MemberRepository extends Repository implements RepositoryInterface
         return 0;
     }
 
+    /**
+     * Delete a member
+     *
+     * @param int $id Member id
+     *
+     * @return int True if delete
+     */
     public function delete(int $id) : int
     {
         $member = Member::where(["id"=>$id])->first();
@@ -45,6 +67,14 @@ class MemberRepository extends Repository implements RepositoryInterface
         return 0;
     }
 
+    /**
+     * Delete a game from member collection
+     *
+     * @param int $id Member id
+     * @param int $game_id Game id
+     *
+     * @return int True if deleted
+     */
     public function deleteGame(int $id, int $game_id) : int
     {
         $member = Member::where(["id"=>$id])->first();
@@ -54,6 +84,13 @@ class MemberRepository extends Repository implements RepositoryInterface
         return 0;
     }
 
+    /**
+     * Find a member
+     *
+     * @param int $id Member id
+     *
+     * @return array Member data
+     */
     public function find(int $id) : array
     {
         $member = Member::where(["id"=>$id])->first();
@@ -63,17 +100,37 @@ class MemberRepository extends Repository implements RepositoryInterface
         return [];
     }
 
+    /**
+     * Retrieve member games
+     *
+     * @param int $id Unique member id
+     *
+     * @return array
+     */
     public function games(int $id) : array
     {
         $collection = Member::where(["id"=>$id])->first()->games()->get();
         return $collection->toArray();
     }
 
+    /**
+     * Get all members
+     *
+     * @return array Member collection
+     */
     public function get() : array
     {
         return Member::get()->toArray();
     }
 
+    /**
+     * Update member data
+     *
+     * @param int $id Member unique id
+     * @param array $data Member new data
+     *
+     * @return array Member data
+     */
     public function update(int $id, array $data) : array
     {
         try {

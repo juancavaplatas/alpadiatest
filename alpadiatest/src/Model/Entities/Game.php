@@ -6,6 +6,11 @@ use Alpadia\Models\Entities\Entity as Entity;
 
 class Game extends Entity
 {
+    /**
+     * Table name
+     *
+     * @var string $table
+     */
     protected $table = "videogames";
 
     /**
