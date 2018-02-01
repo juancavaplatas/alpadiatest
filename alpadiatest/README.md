@@ -1,6 +1,11 @@
-# Slim Framework 3 Skeleton Application
+# Videogames manager
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 3 application. This application uses the latest Slim 3 with the PHP-View template renderer. It also uses the Monolog logger.
+The project is developed using the micro-framework SlimPHP.
+
+## Install the Application
+This project includes the source code and the composer.phar file (we will use it to start and configure our project). First of all, check if you have the correct version of the software dependencies using the command in the root folder:
+
+php composer.phar update
 
 This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
 
@@ -15,7 +20,7 @@ Replace `[my-app-name]` with the desired directory name for your new application
 * Point your virtual host document root to your new application's `public/` directory.
 * Ensure `logs/` is web writeable.
 
-To run the application in development, you can also run this command. 
+To run the application in development, you can also run this command.
 
 	php composer.phar start
 
