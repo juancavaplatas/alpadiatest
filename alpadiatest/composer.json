@@ -36,7 +36,10 @@
         "process-timeout" : 0
     },
     "scripts": {
-        "start": "php -S localhost:8080 -t public public/index.php",
+        "start": "php -S localhost:8080 -t public index.php",
+        "localSetup": [
+            "cp deploy/settings/local.php src/settings.php"
+        ],
         "test": [
             "cp deploy/settings/test.php src/settings.php",
             "mysql --defaults-extra-file=deploy/connection/test.cnf test_alpadia < deploy/fixtures/test.sql",
