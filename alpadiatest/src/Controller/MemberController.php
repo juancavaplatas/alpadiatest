@@ -30,9 +30,9 @@ class MemberController
         return $member;
     }
 
-    public function addGames(int $id, array $game_ids)
+    public function addGame(int $id, int $game_id)
     {
-        $updated = $this->Member->addGames($id, $game_ids);
+        $updated = $this->Member->addGame($id, $game_id);
         if (!$updated) {
             $this->code = 204;
         }

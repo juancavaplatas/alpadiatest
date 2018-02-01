@@ -26,13 +26,11 @@ class MemberRepository extends Repository implements RepositoryInterface
         return [];
     }
 
-    public function addGames(int $id, array $game_ids) : int
+    public function addGame(int $id, int $game_id) : int
     {
         $member = Member::where(["id"=>$id])->first();
         if ( isset($member) ) {
-            foreach ($game_ids as $game_id) {
-                $updated = $member->games()->attach((int)$game_id);
-            }
+            $member->games()->attach($game_id);
             return 1;
         }
         return 0;

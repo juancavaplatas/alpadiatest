@@ -183,11 +183,10 @@ $app->patch('/games/{id}', function (Request $request, Response $response, array
 });
 
 // POST ========================================================================
-$app->post('/members/{id}/games', function (Request $request, Response $response, array $args) {
+$app->post('/members/{id}/games/{game_id}', function (Request $request, Response $response, array $args) {
 
     try {
-        $postData = $request->getParsedBody();
-        $members = $this->MembersController->addGames((int)$args["id"], $postData);
+        $members = $this->MembersController->addGame((int)$args["id"], (int)$args["game_id"]);
         $code = $this->MembersController->code;
         $response = $response->withJson($members, $code);
 
@@ -223,9 +222,9 @@ $app->post('/members', function (Request $request, Response $response, array $ar
 $app->post('/games', function (Request $request, Response $response, array $args) {
 
     try {
-        $code = 200;
         $postData = $request->getParsedBody();
         $game = $this->GamesController->add($postData);
+        $code = $this->GamesController->code;
         $response = $response->withJson($game, $code);
 
     } catch (\Throwable $e) {

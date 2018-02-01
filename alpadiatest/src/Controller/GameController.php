@@ -24,6 +24,7 @@ class GameController
         $game = $this->Game->add($data);
         if (empty($game)) {
             $this->code = 400;
+            $this->errors = $this->Game->getErrors();
         };
         return $game;
     }
@@ -58,7 +59,7 @@ class GameController
     {
         $game = $this->Game->update($id, $data);
         if (empty($game)) {
-            $this->code = 204;
+            $this->code = 400;
         }
         return $game;
     }

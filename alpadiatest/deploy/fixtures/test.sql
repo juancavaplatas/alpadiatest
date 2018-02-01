@@ -82,6 +82,7 @@ DROP TABLE IF EXISTS `videogames`;
 CREATE TABLE `videogames` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
+  `company` ENUM('Nintendo', 'SEGA', 'Sony', 'Microsoft') NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -94,10 +95,10 @@ CREATE TABLE `videogames` (
 
 LOCK TABLES `videogames` WRITE;
 /*!40000 ALTER TABLE `videogames` DISABLE KEYS */;
-INSERT INTO `videogames` VALUES (1,'Sonic the Hedgehog','2017-01-01 00:00:00','2017-01-01 00:00:00');
-INSERT INTO `videogames` VALUES (2,'Megaman','2017-01-01 00:00:00','2017-01-01 00:00:00');
-INSERT INTO `videogames` VALUES (3,'Street Fighter','2017-01-01 00:00:00','2017-01-01 00:00:00');
-INSERT INTO `videogames` VALUES (4,'Tetris','2017-01-01 00:00:00','2017-01-01 00:00:00');
+INSERT INTO `videogames` VALUES (1,'Sonic the Hedgehog','SEGA','2017-01-01 00:00:00','2017-01-01 00:00:00');
+INSERT INTO `videogames` VALUES (2,'Megaman','Sony','2017-01-01 00:00:00','2017-01-01 00:00:00');
+INSERT INTO `videogames` VALUES (3,'Street Fighter','Nintendo','2017-01-01 00:00:00','2017-01-01 00:00:00');
+INSERT INTO `videogames` VALUES (4,'Tetris','Microsoft','2017-01-01 00:00:00','2017-01-01 00:00:00');
 /*!40000 ALTER TABLE `videogames` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -35,18 +35,21 @@ class GamesTest extends BaseTestCase
             0 => [
                 "id" => 1,
                 "name" => "Sonic the Hedgehog",
+                "company" => "SEGA",
                 "created" => "2017-01-01 00:00:00",
                 "modified" => "2017-01-01 00:00:00"
             ],
             1 => [
                 "id" => 3,
                 "name" => "Street Fighter",
+                "company" => "Nintendo",
                 "created" => "2017-01-01 00:00:00",
                 "modified" => "2017-01-01 00:00:00"
             ],
             2 => [
                 "id" => 4,
                 "name" => "Tetris",
+                "company" => "Microsoft",
                 "created" => "2017-01-01 00:00:00",
                 "modified" => "2017-01-01 00:00:00"
             ]
@@ -72,6 +75,7 @@ class GamesTest extends BaseTestCase
         $expected = [
             "id" => 1,
             "name" => "Sonic the Hedgehog",
+            "company" => "SEGA",
             "created" => "2017-01-01 00:00:00",
             "modified" => "2017-01-01 00:00:00"
         ];
@@ -92,18 +96,30 @@ class GamesTest extends BaseTestCase
 
     public function testPatchId()
     {
+        // Mock 400 request
+        $data = [
+            "name" => "Megaman",
+            "company" => "Rare"
+        ];
+        $response = $this->runApp('PATCH', $this->baseUrl . "/1", $data);
+        $body = json_decode((string)$response->getBody(), true);
+        // Make assertions
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertInternalType("array", $body);
+
         // Mock 204 request
         $data = [
             "name" => "Megaman",
+            "company" => "Nintendo"
         ];
         $response = $this->runApp('PATCH', $this->baseUrl . "/1000", $data);
         $body = json_decode((string)$response->getBody(), true);
         // Make assertions
-        $this->assertEquals(204, $response->getStatusCode());
+        $this->assertEquals(400, $response->getStatusCode());
 
         // Mock 200 request
         $data = [
-            "name" => "Megaman",
+            "name" => "Megaman"
         ];
         $response = $this->runApp('PATCH', $this->baseUrl . "/1", $data);
         $body = json_decode((string)$response->getBody(), true);
@@ -118,9 +134,10 @@ class GamesTest extends BaseTestCase
 
     public function testPost()
     {
-        // Mock request
+        // Mock 200 request
         $data = [
-            "name" => "Super Mario Bros"
+            "name" => "Super Mario Bros",
+            "company" => "Nintendo"
         ];
         $response = $this->runApp('POST', $this->baseUrl, $data);
         $body = json_decode((string)$response->getBody(), true);
@@ -129,8 +146,20 @@ class GamesTest extends BaseTestCase
         $this->assertInternalType("array", $body);
         $this->assertEquals(5, $body["id"]);
         $this->assertEquals($data["name"], $body["name"]);
+        $this->assertEquals($data["company"], $body["company"]);
         $this->assertInternalType("string", $body["created"]);
         $this->assertInternalType("string", $body["modified"]);
+
+        // Mock 400 request
+        $data = [
+            "name" => "Super Mario Bros",
+            "company" => "Rare"
+        ];
+        $response = $this->runApp('POST', $this->baseUrl, $data);
+        $body = json_decode((string)$response->getBody(), true);
+        // Assertions
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertInternalType("array", $body);
     }
 
     public function testPostId()

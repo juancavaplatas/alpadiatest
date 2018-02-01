@@ -10,6 +10,7 @@ class GameFactoryTest extends TestCase
         $data = [
             "id" => 1,
             "name" => "Sonic the Hedgehog",
+            "company" => "SEGA",
             "created" => "2017-01-01 00:00:00",
             "modified" => "2017-01-01 00:00:00"
         ];
@@ -17,9 +18,10 @@ class GameFactoryTest extends TestCase
         $this->assertInternalType("object", $game);
         $this->assertInstanceOf("Alpadia\Models\Entities\Game", $game);
         $keys = array_keys($game->getAttributes());
-        $this->assertEquals(["id","name","created","modified"], $keys);
+        $this->assertEquals(["id","name","company","created","modified"], $keys);
         $this->assertEquals($data["id"], $game->id);
         $this->assertEquals($data["name"], $game->name);
+        $this->assertEquals($data["company"], $game->company);
         $this->assertEquals($data["created"], $game->created);
         $this->assertEquals($data["modified"], $game->modified);
     }

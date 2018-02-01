@@ -155,17 +155,17 @@ class MembersTest extends BaseTestCase
         $this->assertEquals(405, $response->getStatusCode());
     }
 
-    public function testPostIdGames()
+    public function testPostIdGamesId()
     {
         // Mock request
-        $data = [3];
-        $response = $this->runApp('POST', $this->baseUrl . "/1/games", $data);
+        $data = [];
+        $response = $this->runApp('POST', $this->baseUrl . "/1/games/5", $data);
         $body = json_decode((string)$response->getBody(), true);
         // Make assertions
         $this->assertEquals(200, $response->getStatusCode());
 
         // Mock 204 request
-        $response = $this->runApp('POST', $this->baseUrl . "/1000/games", $data);
+        $response = $this->runApp('POST', $this->baseUrl . "/1000/games/5", $data);
         $body = json_decode((string)$response->getBody(), true);
         // Make assertions
         $this->assertEquals(204, $response->getStatusCode());

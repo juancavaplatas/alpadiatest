@@ -2,7 +2,7 @@
 
 The project is developed using the micro-framework SlimPHP. The application allows to the user to consult, write and delete information from a SQL database through a RESTful API.
 
-
+The API accepts JSON and x-www-form-urlencoded requests, returning a JSON formatted response in both cases.  
 
 ## Install the Application
 This project includes the source code, the sql dump and the composer.phar file (we will use it to start and configure our project). First of all, check if you have the correct version of the software dependencies using the command in the root folder:
@@ -33,3 +33,5 @@ After the installation you should be able to try accessing to the API endpoints 
 | /games/{id}   | Not allowed       | Get game     | Update game   | Not allowed | Delete a game   |
 | /members/{id}/games | Adds one or more games to the member | Get member games collection   | Not allowed | Not allowed | Not allowed |
 | /members/{id}/games/{game_id} | Not allowed | Not allowed | Not allowed | Not allowed | Deletes a game from the member collection |
+
+## API examples
