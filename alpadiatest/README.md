@@ -42,6 +42,7 @@ If you are using the default built-in PHP server, your API will be available on 
 Request:
 - Type: GET
 - URL: localhost:8080/members
+
 Response:
 
     [
@@ -68,6 +69,7 @@ Response:
 Request
 - Type: GET
 - URL: localhost:8080/members/5
+
 Response:
 
     {
@@ -83,6 +85,7 @@ Response:
 Request:
 - Type: GET
 - URL: localhost:8080/members/5/games
+
 Response:
 
     [
@@ -107,6 +110,7 @@ Response:
 Request:
 - Type: GET
 - URL: localhost:8080/games
+
 Response:
 
     [
@@ -131,6 +135,7 @@ Response:
 Request
 - Type: GET
 - URL: localhost:8080/games/1
+
 Response
 
     {
@@ -139,6 +144,60 @@ Response
         "company": "SEGA",
         "created": "2018-02-01 19:12:51",
                 "modified": "2018-02-01 19:12:51"
+    }
+
+### POST members
+Request
+- Type: POST
+- URL: localhost:8080/members
+
+Post data
+
+    {
+        "name": "Freddy",
+        "surname": "Mercury",
+        "email": "freddymercury@queen.com"
+    }
+
+Tip: Don't forget any field. The email must be unique.
+
+Response
+
+    {
+        "name": "Freddy",
+        "surname": "Mercury",
+        "email": "freddymercury@queen.com",
+        "modified": "2018-02-01 21:00:53",
+        "created": "2018-02-01 21:00:53",
+        "id": 9
+    }
+
+### POST games
+Request
+- Type: POST
+- URL: localhost:8080/games
+
+Post data
+
+    {
+        name: "Super Street Fighter",
+        company: "Sony"
+    }
+
+Tip: The company name is restricted to the next values:
+- Nintendo
+- SEGA
+- Sony
+- Microsoft
+
+Response
+
+    {
+        "name": "Super Street Fighter",
+        "company": "Sony",
+        "modified": "2018-02-01 20:58:44",
+        "created": "2018-02-01 20:58:44",
+        "id": 20
     }
 
 
