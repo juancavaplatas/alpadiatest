@@ -39,9 +39,10 @@ After the installation you should be able to try accessing to the API endpoints 
 If you are using the default built-in PHP server, your API will be available on localhost:8080. Here you have some examples of each available endpoint
 
 ### GET members
+Request:
 - Type: GET
 - URL: localhost:8080/members
-- Response
+Response:
 
     [
         {
@@ -64,9 +65,11 @@ If you are using the default built-in PHP server, your API will be available on 
     ]
 
 ### GET members/id
+Request
 - Type: GET
 - URL: localhost:8080/members/5
-- Response
+Response:
+
     {
         "id": 5,
         "name": "Bon",
@@ -76,10 +79,12 @@ If you are using the default built-in PHP server, your API will be available on 
         "modified": "2018-02-01 20:33:12"
     }
 
-### GET games
+### GET members/id/games
+Request:
 - Type: GET
-- URL: localhost:8080/games
-- Response
+- URL: localhost:8080/members/5/games
+Response:
+
     [
         {
             "id": 1,
@@ -88,7 +93,31 @@ If you are using the default built-in PHP server, your API will be available on 
             "created": "2018-02-01 19:12:51",
             "modified": "2018-02-01 19:12:51"
         },
-        {...}
+        {...},
+        {
+            "id": 5,
+            "name": "Gran Turismo 2",
+            "company": "Sony",
+            "created": "2018-02-01 19:16:38",
+            "modified": "2018-02-01 19:16:38"
+        }
+    ]
+
+### GET games
+Request:
+- Type: GET
+- URL: localhost:8080/games
+Response:
+
+    [
+        {
+            "id": 1,
+            "name": "Sonic the Hedgehog",
+            "company": "SEGA",
+            "created": "2018-02-01 19:12:51",
+            "modified": "2018-02-01 19:12:51"
+        },
+        {...},
         {
             "id": 19,
             "name": "Wind Jammers",
@@ -97,3 +126,19 @@ If you are using the default built-in PHP server, your API will be available on 
             "modified": "2018-02-01 19:18:50"
         }
     ]
+
+### GET games/id
+Request
+- Type: GET
+- URL: localhost:8080/games/1
+Response
+
+    {
+        "id": 1,
+        "name": "Sonic the Hedgehog",
+        "company": "SEGA",
+        "created": "2018-02-01 19:12:51",
+                "modified": "2018-02-01 19:12:51"
+    }
+
+
