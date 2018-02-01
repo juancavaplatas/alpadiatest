@@ -2,10 +2,9 @@
 
 namespace Alpadia\Models\Factories;
 
-use \stdClass as stdClass;
 use Alpadia\Models\Entities\Game as Game;
 
-class VideogameFactory
+class GameFactory
 {
     public static function createFromArray(array $array)
     {

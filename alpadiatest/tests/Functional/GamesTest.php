@@ -19,11 +19,10 @@ class GamesTest extends BaseTestCase
         $response = $this->runApp('DELETE', $this->baseUrl . '/2');
         $this->assertEquals(200, $response->getStatusCode());
 
-        // Mock 400 request
+        // Mock 204 request
         $response = $this->runApp('DELETE', $this->baseUrl . '/1000');
-        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertEquals(204, $response->getStatusCode());
     }
-
 
     public function testGet()
     {
@@ -45,16 +44,24 @@ class GamesTest extends BaseTestCase
 
     public function testGetId()
     {
+        // Mock 204 request
+        $response = $this->runApp('GET', $this->baseUrl . "/1000");
+        $body = json_decode((string)$response->getBody(), true);
+        // Assertions
+        $this->assertEquals(204, $response->getStatusCode());
+        $expected = [];
+        $this->assertEquals($expected, $body);
+
         // Mock request
         $response = $this->runApp('GET', $this->baseUrl . "/1");
         $body = json_decode((string)$response->getBody(), true);
         // Assertions
         $this->assertEquals(200, $response->getStatusCode());
         $expected = [
+            "id" => 1,
             "name" => "Sonic the Hedgehog",
             "created" => "2017-01-01 00:00:00",
-            "modified" => "2017-01-01 00:00:00",
-            "id" => 1
+            "modified" => "2017-01-01 00:00:00"
         ];
         $this->assertEquals($expected, $body);
     }
@@ -73,7 +80,16 @@ class GamesTest extends BaseTestCase
 
     public function testPatchId()
     {
-        // Mock request
+        // Mock 204 request
+        $data = [
+            "name" => "Megaman",
+        ];
+        $response = $this->runApp('PATCH', $this->baseUrl . "/1000", $data);
+        $body = json_decode((string)$response->getBody(), true);
+        // Make assertions
+        $this->assertEquals(204, $response->getStatusCode());
+
+        // Mock 200 request
         $data = [
             "name" => "Megaman",
         ];
@@ -122,8 +138,6 @@ class GamesTest extends BaseTestCase
         // Make assertions
         $this->assertEquals(405, $response->getStatusCode());
     }
-
-
 
     public function testPut()
     {

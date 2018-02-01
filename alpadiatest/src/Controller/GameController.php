@@ -2,45 +2,39 @@
 
 namespace Alpadia\Controllers;
 
-use Alpadia\Models\Entities\Game as Game;
-use Alpadia\Models\Factories\VideogameFactory as GameFactory;
+use Alpadia\Models\Repositories\GameRepository as GameRepository;
+use Illuminate\Database\Query\Builder as Builder;
 use Psr\Log\LoggerInterface;
-use Illuminate\Database\Query\Builder;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class GameController
 {
     private $logger;
-    protected $table;
-
     public $code = 200;
 
     public function __construct(LoggerInterface $logger, Builder $table)
     {
         $this->logger = $logger;
-        $this->table = $table;
+        $this->Game = new GameRepository($table);
     }
 
     public function add(array $data)
     {
-        $game = GameFactory::createFromArray($data);
-        if ($game->save()) {
-            return $game->toArray();
+        $game = $this->Game->add($data);
+        if (empty($game)) {
+            $this->code = 400;
         };
-
-        $this->code = 400;
-        return [];
+        return $game;
     }
 
     public function delete(int $id)
     {
-        $game = Game::where(["id"=>$id])->first();
-        if ( isset($game) ) {
-            return $game->delete();
+        $deleted = $this->Game->delete($id);
+        if (!$deleted) {
+            $this->code = 204;
         }
-        $this->code = 204;
-        return 0;
+        return $deleted;
     }
 
     /**
@@ -48,17 +42,24 @@ class GameController
      */
     public function find(int $id) : array
     {
-        return Game::where(["id"=>$id])->first()->toArray();
+        $game = $this->Game->find($id);
+        if (empty($game)) {
+            $this->code = 204;
+        }
+        return $game;
     }
 
     public function get()
     {
-        return Game::get()->toArray();
+        return $this->Game->get();
     }
 
     public function update(int $id, array $data) : array
     {
-        $member = Game::where(["id" => $id])->update($data);
-        return $this->find($id);
+        $game = $this->Game->update($id, $data);
+        if (empty($game)) {
+            $this->code = 204;
+        }
+        return $game;
     }
 }

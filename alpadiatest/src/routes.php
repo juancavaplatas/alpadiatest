@@ -27,10 +27,8 @@ $app->delete('/members/{id}', function (Request $request, Response $response, ar
 $app->delete('/games/{id}', function (Request $request, Response $response, array $args) {
 
     try {
-        $code = 400;
-        if ($this->GamesController->delete((int)$args["id"])) {
-            $code = 200;
-        }
+        $this->GamesController->delete((int)$args["id"]);
+        $code = $this->GamesController->code;
         $response = $response->withStatus($code);
 
     } catch (\Throwable $e) {
@@ -47,8 +45,8 @@ $app->delete('/games/{id}', function (Request $request, Response $response, arra
 $app->get('/games/{id}', function (Request $request, Response $response, array $args) {
 
     try {
-        $code = 200;
-        $game = $this->get("GamesController")->find((int)$args["id"]);
+        $game = $this->GamesController->find((int)$args["id"]);
+        $code = $this->GamesController->code;
         $response = $response->withJson($game, $code);
 
     } catch (\Throwable $e) {
@@ -64,9 +62,8 @@ $app->get('/games/{id}', function (Request $request, Response $response, array $
 $app->get('/games', function (Request $request, Response $response, array $args) {
 
     try {
-        $code = 200;
-        $games = $this->get("GamesController")->get();
-        $response = $response->withJson($games, $code);
+        $games = $this->GamesController->get();
+        $response = $response->withJson($games);
 
     } catch (\Throwable $e) {
         $code = 500;
@@ -153,10 +150,9 @@ $app->patch('/members/{id}', function (Request $request, Response $response, arr
 $app->patch('/games/{id}', function (Request $request, Response $response, array $args) {
 
     try {
-        $code = 200;
         $postData = $request->getParsedBody();
-        // $videogameController = new VideogameController($this->db);
         $game = $this->GamesController->update((int)$args["id"], $postData);
+        $code = $this->GamesController->code;
         $response = $response->withJson($game, $code);
 
     } catch (\Throwable $e) {
@@ -168,7 +164,6 @@ $app->patch('/games/{id}', function (Request $request, Response $response, array
     // return response
     return $response;
 });
-
 
 // POST ========================================================================
 $app->post('/members', function (Request $request, Response $response, array $args) {
