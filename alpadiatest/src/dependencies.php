@@ -1,9 +1,13 @@
 <?php
 // DIC configuration
 
+use Alpadia\Controllers\GameController as GameController;
+use Alpadia\Controllers\MemberController as MemberController;
+
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
+
 
 $container = $app->getContainer();
 
@@ -29,4 +33,16 @@ $container['db'] = function ($container) {
     $capsule->setAsGlobal();
     $capsule->bootEloquent();
     return $capsule;
+};
+
+$container["MembersController"] = function ($c) {
+    $logger = $c->get('logger');
+    $table = $c->get('db')->table('members');
+    return new MemberController($logger, $table);
+};
+
+$container['GamesController'] = function ($c) {
+    $logger = $c->get('logger');
+    $table = $c->get('db')->table('videogames');
+    return new GameController($logger, $table);
 };

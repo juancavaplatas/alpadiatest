@@ -15,12 +15,12 @@ class MembersTest extends BaseTestCase
 
     public function testDeleteId()
     {
+        // Mock 400 request
+        $response = $this->runApp('DELETE', $this->baseUrl . '/1000');
+        $this->assertEquals(204, $response->getStatusCode());
         // Mock 200 request
         $response = $this->runApp('DELETE', $this->baseUrl . '/2');
         $this->assertEquals(200, $response->getStatusCode());
-        // Mock 400 request
-        $response = $this->runApp('DELETE', $this->baseUrl . '/1000');
-        $this->assertEquals(400, $response->getStatusCode());
     }
 
     public function testGet()
@@ -44,57 +44,40 @@ class MembersTest extends BaseTestCase
 
     public function testGetId()
     {
+        // Mock bad request
+        $response = $this->runApp('GET', $this->baseUrl . '/1000');
+        $body = json_decode((string)$response->getBody(), true);
+        $this->assertEquals(204, $response->getStatusCode());
+
         // Mock request
         $response = $this->runApp('GET', $this->baseUrl . '/1');
         $body = json_decode((string)$response->getBody(), true);
         // Make assertions
         $this->assertEquals(200, $response->getStatusCode());
         $expected = [
+            "id" => 1,
             "name" => "Juan",
             "surname" => "Cava",
             "created" => "2017-01-01 00:00:00",
-            "modified" => "2017-01-01 00:00:00",
-            "id" => 1
+            "modified" => "2017-01-01 00:00:00"
         ];
         $this->assertEquals($expected, $body);
     }
 
-    public function testPost()
+    public function testGetIdGames()
     {
         // Mock request
-        $data = [
-            "name" => "Javier",
-            "surname" => "Garcia",
-            "created" => "2017-01-01 00:00:00",
-            "modified" => "2017-01-01 00:00:00"
-        ];
-        $response = $this->runApp('POST', $this->baseUrl, $data);
+        $response = $this->runApp('GET', $this->baseUrl . '/1/games');
         $body = json_decode((string)$response->getBody(), true);
         // Make assertions
         $this->assertEquals(200, $response->getStatusCode());
-        $expected = [
-            "name" => "Javier",
-            "surname" => "Garcia",
-            "created" => "2017-01-01 00:00:00",
-            "modified" => "2017-01-01 00:00:00",
-            "id" => 3
-        ];
-        $this->assertEquals($expected, $body);
-    }
-
-    public function testPostId()
-    {
-        // Mock request
-        $data = [
-            "name" => "Javier",
-            "surname" => "Garcia",
-            "created" => "2017-01-01 00:00:00",
-            "modified" => "2017-01-01 00:00:00"
-        ];
-        $response = $this->runApp('POST', $this->baseUrl . "/1", $data);
-        $body = json_decode((string)$response->getBody(), true);
-        // Make assertions
-        $this->assertEquals(405, $response->getStatusCode());
+        $this->assertInternalType("array", $body);
+        $this->assertEquals(1, count($body));
+        $this->assertInternalType("array", $body[0]);
+        $this->assertEquals(1, $body[0]["id"]);
+        $this->assertEquals("Megaman", $body[0]["name"]);
+        $this->assertEquals("2017-01-01 00:00:00", $body[0]["created"]);
+        $this->assertInternalType("string", $body[0]["modified"]);
     }
 
     public function testPatch()
@@ -104,7 +87,6 @@ class MembersTest extends BaseTestCase
             "surname" => "Cava Platas",
         ];
         $response = $this->runApp('PATCH', $this->baseUrl, $data);
-        $body = json_decode((string)$response->getBody(), true);
         // Make assertions
         $this->assertEquals(405, $response->getStatusCode());
     }
@@ -119,15 +101,45 @@ class MembersTest extends BaseTestCase
         $body = json_decode((string)$response->getBody(), true);
         // Make assertions
         $this->assertEquals(200, $response->getStatusCode());
-        $expected = [
-            "name" => "Juan",
-            "surname" => "Cava Platas",
-            "created" => "2017-01-01 00:00:00",
-            "modified" => "2017-01-01 00:00:00",
-            "id" => 1
-        ];
-        $this->assertEquals($expected, $body);
+        $this->assertInternalType("array", $body);
+        $this->assertEquals(1, $body["id"]);
+        $this->assertEquals("Juan", $body["name"]);
+        $this->assertEquals("2017-01-01 00:00:00", $body["created"]);
+        $this->assertInternalType("string", $body["modified"]);
     }
+
+    public function testPost()
+    {
+        // Mock request
+        $data = [
+            "name" => "Javier",
+            "surname" => "Garcia"
+        ];
+        $response = $this->runApp('POST', $this->baseUrl, $data);
+        $body = json_decode((string)$response->getBody(), true);
+        // Make assertions
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertInternalType("array", $body);
+        $this->assertEquals(3, $body["id"]);
+        $this->assertEquals($data["name"], $body["name"]);
+        $this->assertEquals($data["surname"], $body["surname"]);
+        $this->assertInternalType("string", $body["created"]);
+        $this->assertInternalType("string", $body["modified"]);
+    }
+
+    public function testPostId()
+    {
+        // Mock request
+        $data = [
+            "name" => "Javier",
+            "surname" => "Garcia"
+        ];
+        $response = $this->runApp('POST', $this->baseUrl . "/1", $data);
+        $body = json_decode((string)$response->getBody(), true);
+        // Make assertions
+        $this->assertEquals(405, $response->getStatusCode());
+    }
+
 
     public function testPut()
     {

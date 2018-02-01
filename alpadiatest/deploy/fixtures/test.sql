@@ -53,6 +53,8 @@ CREATE TABLE `members_videogames` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `member_id` int(11) NOT NULL,
   `videogame_id` int(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_members_idx` (`member_id`),
   KEY `fk_videogames_idx` (`videogame_id`),
@@ -67,6 +69,7 @@ CREATE TABLE `members_videogames` (
 
 LOCK TABLES `members_videogames` WRITE;
 /*!40000 ALTER TABLE `members_videogames` DISABLE KEYS */;
+INSERT INTO `members_videogames` VALUES (1,1,1,'2017-01-01 00:00:00','2017-01-01 00:00:00');
 /*!40000 ALTER TABLE `members_videogames` ENABLE KEYS */;
 UNLOCK TABLES;
 

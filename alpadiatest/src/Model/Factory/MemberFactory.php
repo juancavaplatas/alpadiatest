@@ -3,11 +3,11 @@
 namespace Alpadia\Models\Factories;
 
 use \stdClass as stdClass;
-use Alpadia\Models\Entities\Member as Member;
+use Alpadia\Models\Repositories\Member as Member;
 
 class MemberFactory
 {
-    public static function createFromMap(stdClass $object)
+    /*public static function createFromMap(stdClass $object)
     {
         // Create new member
         $member = new Member();
@@ -25,7 +25,7 @@ class MemberFactory
 
         // Return new member
         return $member;
-    }
+    }*/
 
     public static function createFromArray(array $array)
     {
@@ -46,13 +46,13 @@ class MemberFactory
         return $member;
     }
 
-    public static function createErrorEntity()
+    /*public static function createErrorEntity()
     {
         // Create new member
         $member = new Member();
         $member->setError(true);
         return $member;
-    }
+    }*/
 }
 
 ?>

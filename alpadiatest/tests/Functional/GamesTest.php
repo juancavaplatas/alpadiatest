@@ -2,9 +2,9 @@
 
 namespace Tests\Functional;
 
-class VideogamesTest extends BaseTestCase
+class GamesTest extends BaseTestCase
 {
-    public $baseUrl = "/videogames";
+    public $baseUrl = "/games";
 
     public function testDelete()
     {
@@ -23,6 +23,7 @@ class VideogamesTest extends BaseTestCase
         $response = $this->runApp('DELETE', $this->baseUrl . '/1000');
         $this->assertEquals(400, $response->getStatusCode());
     }
+
 
     public function testGet()
     {
@@ -45,7 +46,7 @@ class VideogamesTest extends BaseTestCase
     public function testGetId()
     {
         // Mock request
-        $response = $this->runApp('GET', $this->baseUrl . '/1');
+        $response = $this->runApp('GET', $this->baseUrl . "/1");
         $body = json_decode((string)$response->getBody(), true);
         // Assertions
         $this->assertEquals(200, $response->getStatusCode());
@@ -56,6 +57,35 @@ class VideogamesTest extends BaseTestCase
             "id" => 1
         ];
         $this->assertEquals($expected, $body);
+    }
+
+    public function testPatch()
+    {
+        // Mock request
+        $data = [
+            "name" => "Megaman",
+        ];
+        $response = $this->runApp('PATCH', $this->baseUrl, $data);
+        $body = json_decode((string)$response->getBody(), true);
+        // Make assertions
+        $this->assertEquals(405, $response->getStatusCode());
+    }
+
+    public function testPatchId()
+    {
+        // Mock request
+        $data = [
+            "name" => "Megaman",
+        ];
+        $response = $this->runApp('PATCH', $this->baseUrl . "/1", $data);
+        $body = json_decode((string)$response->getBody(), true);
+        // Make assertions
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertInternalType("array", $body);
+        $this->assertEquals(1, $body["id"]);
+        $this->assertEquals($data["name"], $body["name"]);
+        $this->assertEquals("2017-01-01 00:00:00", $body["created"]);
+        $this->assertInternalType("string", $body["modified"]);
     }
 
     public function testPost()
@@ -93,36 +123,7 @@ class VideogamesTest extends BaseTestCase
         $this->assertEquals(405, $response->getStatusCode());
     }
 
-    public function testPatch()
-    {
-        // Mock request
-        $data = [
-            "name" => "Megaman",
-        ];
-        $response = $this->runApp('PATCH', $this->baseUrl, $data);
-        $body = json_decode((string)$response->getBody(), true);
-        // Make assertions
-        $this->assertEquals(405, $response->getStatusCode());
-    }
 
-    public function testPatchId()
-    {
-        // Mock request
-        $data = [
-            "name" => "Megaman",
-        ];
-        $response = $this->runApp('PATCH', $this->baseUrl . "/1", $data);
-        $body = json_decode((string)$response->getBody(), true);
-        // Make assertions
-        $this->assertEquals(200, $response->getStatusCode());
-        $expected = [
-            "name" => "Megaman",
-            "created" => "2017-01-01 00:00:00",
-            "modified" => "2017-01-01 00:00:00",
-            "id" => 1
-        ];
-        $this->assertEquals($expected, $body);
-    }
 
     public function testPut()
     {

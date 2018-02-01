@@ -2,42 +2,81 @@
 
 namespace Alpadia\Controllers;
 
+use Alpadia\Models\Repositories\Member as Member;
 use Alpadia\Models\Factories\MemberFactory as MemberFactory;
 use Alpadia\Models\Repositories\MemberModel as MemberModel;
 
+use Psr\Log\LoggerInterface;
+use Illuminate\Database\Query\Builder as Builder;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
+
 class MemberController
 {
-    public $Member;
+    private $logger;
+    protected $table;
 
-    public function __construct($db)
+    public $code = 200;
+
+    public function __construct(LoggerInterface $logger, Builder $table)
     {
-        $this->Member = new MemberModel($db);
+        $this->logger = $logger;
+        $this->table = $table;
     }
 
     public function add(array $data)
     {
         $member = MemberFactory::createFromArray($data);
-        return $this->Member->insert($member);
+        if ($member->save()) {
+            return $member->toArray();
+        };
+
+        $this->code = 400;
+        return [];
     }
 
     public function delete(int $id)
     {
-        return $this->Member->delete($id);
+        $member = Member::where(["id"=>$id])->first();
+        if ( isset($member) ) {
+            return $member->delete();
+        }
+        $this->code = 204;
+        return 0;
     }
 
-    public function find(int $id)
+    public function find(int $id): array
     {
-        return $this->Member->find($id);
+        $member = Member::where(["id"=>$id])->first();
+        if ($member) {
+            return $member->toArray();
+        }
+        $this->code = 204;
+        return [];
     }
 
-    public function get()
+    /**
+     * Retrieve member games
+     *
+     * @param int $id Unique member id
+     *
+     * @return array
+     */
+    public function findGames(int $id) : array
     {
-        return $this->Member->get();
+        $collection = Member::where(["id"=>$id])->first()->games()->get();
+        return $collection->toArray();
     }
 
-    public function update(int $id, array $data)
+    public function get() : array
     {
-        return $this->Member->update($id, $data);
+        return Member::get()->toArray();
+    }
+
+    public function update(int $id, array $data) : array
+    {
+        $member = Member::where(["id" => $id])->update($data);
+        return $this->find($id);
     }
 }
 

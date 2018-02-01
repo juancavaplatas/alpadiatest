@@ -3,14 +3,14 @@
 namespace Alpadia\Models\Factories;
 
 use \stdClass as stdClass;
-use Alpadia\Models\Entities\Videogame as Videogame;
+use Alpadia\Models\Repositories\Game as Game;
 
 class VideogameFactory
 {
-    public static function createFromMap(stdClass $object)
+    /*public static function createFromMap(stdClass $object)
     {
         // Create new videogame
-        $videogame = new Videogame();
+        $videogame = new Game();
 
         // Fill new videogame
         foreach($object as $property => &$value)
@@ -25,12 +25,12 @@ class VideogameFactory
 
         // Return new videogame
         return $videogame;
-    }
+    }*/
 
     public static function createFromArray(array $array)
     {
         // Create new videogame
-        $videogame = new Videogame();
+        $videogame = new Game();
 
         // Fill new videogame
         foreach($array as $property => $value)
@@ -46,13 +46,13 @@ class VideogameFactory
         return $videogame;
     }
 
-    public static function createErrorEntity()
+    /*public static function createErrorEntity()
     {
         // Create new videogame
         $videogame = new Videogame();
         $videogame->setError(true);
         return $videogame;
-    }
+    }*/
 }
 
 ?>

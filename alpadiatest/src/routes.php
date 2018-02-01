@@ -3,8 +3,6 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-use Alpadia\Controllers\MemberController as MemberController;
-use Alpadia\Controllers\VideogameController as VideogameController;
 use Alpadia\Utils\ErrorHandler as ErrorHandler;
 
 // Routes
@@ -12,11 +10,8 @@ use Alpadia\Utils\ErrorHandler as ErrorHandler;
 $app->delete('/members/{id}', function (Request $request, Response $response, array $args) {
 
     try {
-        $code = 400;
-        $memberController = new MemberController($this->db);
-        if ($memberController->delete((int)$args["id"])) {
-            $code = 200;
-        }
+        $this->MembersController->delete((int)$args["id"]);
+        $code = $this->MembersController->code;
         $response = $response->withStatus($code);
 
     } catch (\Throwable $e) {
@@ -29,12 +24,11 @@ $app->delete('/members/{id}', function (Request $request, Response $response, ar
     return $response;
 });
 
-$app->delete('/videogames/{id}', function (Request $request, Response $response, array $args) {
+$app->delete('/games/{id}', function (Request $request, Response $response, array $args) {
 
     try {
         $code = 400;
-        $videogameController = new VideogameController($this->db);
-        if ($videogameController->delete((int)$args["id"])) {
+        if ($this->GamesController->delete((int)$args["id"])) {
             $code = 200;
         }
         $response = $response->withStatus($code);
@@ -50,12 +44,62 @@ $app->delete('/videogames/{id}', function (Request $request, Response $response,
 });
 
 // GET =========================================================================
-$app->get('/members/{id}', function (Request $request, Response $response, array $args) {
+$app->get('/games/{id}', function (Request $request, Response $response, array $args) {
 
     try {
         $code = 200;
-        $memberController = new MemberController($this->db);
-        $member = $memberController->find((int)$args["id"]);
+        $game = $this->get("GamesController")->find((int)$args["id"]);
+        $response = $response->withJson($game, $code);
+
+    } catch (\Throwable $e) {
+        $code = 500;
+        $error = ErrorHandler::getErrorMessage($e);
+        $response = $response->withJson($error, $code);
+    }
+
+    // return response
+    return $response;
+});
+
+$app->get('/games', function (Request $request, Response $response, array $args) {
+
+    try {
+        $code = 200;
+        $games = $this->get("GamesController")->get();
+        $response = $response->withJson($games, $code);
+
+    } catch (\Throwable $e) {
+        $code = 500;
+        $error = ErrorHandler::getErrorMessage($e);
+        $response = $response->withJson($error, $code);
+    }
+
+    // return response
+    return $response;
+});
+
+$app->get('/members/{id}/games', function (Request $request, Response $response, array $args) {
+
+    try {
+        $member = $this->MembersController->findGames((int)$args["id"]);
+        $code = $this->MembersController->code;
+        $response = $response->withJson($member, $code);
+
+    } catch (\Throwable $e) {
+        $code = 500;
+        $error = ErrorHandler::getErrorMessage($e);
+        $response = $response->withJson($error, $code);
+    }
+
+    // return response
+    return $response;
+});
+
+$app->get('/members/{id}', function (Request $request, Response $response, array $args) {
+
+    try {
+        $member = $this->MembersController->find((int)$args["id"]);
+        $code = $this->MembersController->code;
         $response = $response->withJson($member, $code);
 
     } catch (\Throwable $e) {
@@ -72,45 +116,9 @@ $app->get('/members', function (Request $request, Response $response, array $arg
 
     try {
         $code = 200;
-        $memberController = new MemberController($this->db);
+        $memberController = $this->MembersController;
         $members = $memberController->get();
         $response = $response->withJson($members, $code);
-
-    } catch (\Throwable $e) {
-        $code = 500;
-        $error = ErrorHandler::getErrorMessage($e);
-        $response = $response->withJson($error, $code);
-    }
-
-    // return response
-    return $response;
-});
-
-$app->get('/videogames/{id}', function (Request $request, Response $response, array $args) {
-
-    try {
-        $code = 200;
-        $videogameController = new VideogameController($this->db);
-        $videogame = $videogameController->find((int)$args["id"]);
-        $response = $response->withJson($videogame, $code);
-
-    } catch (\Throwable $e) {
-        $code = 500;
-        $error = ErrorHandler::getErrorMessage($e);
-        $response = $response->withJson($error, $code);
-    }
-
-    // return response
-    return $response;
-});
-
-$app->get('/videogames', function (Request $request, Response $response, array $args) {
-
-    try {
-        $code = 200;
-        $videogameController = new VideogameController($this->db);
-        $videogames = $videogameController->get();
-        $response = $response->withJson($videogames, $code);
 
     } catch (\Throwable $e) {
         $code = 500;
@@ -128,7 +136,7 @@ $app->patch('/members/{id}', function (Request $request, Response $response, arr
     try {
         $code = 200;
         $postData = $request->getParsedBody();
-        $memberController = new MemberController($this->db);
+        $memberController = $this->MembersController;
         $member = $memberController->update((int)$args["id"], $postData);
         $response = $response->withJson($member, $code);
 
@@ -142,14 +150,14 @@ $app->patch('/members/{id}', function (Request $request, Response $response, arr
     return $response;
 });
 
-$app->patch('/videogames/{id}', function (Request $request, Response $response, array $args) {
+$app->patch('/games/{id}', function (Request $request, Response $response, array $args) {
 
     try {
         $code = 200;
         $postData = $request->getParsedBody();
-        $videogameController = new VideogameController($this->db);
-        $videogame = $videogameController->update((int)$args["id"], $postData);
-        $response = $response->withJson($videogame, $code);
+        // $videogameController = new VideogameController($this->db);
+        $game = $this->GamesController->update((int)$args["id"], $postData);
+        $response = $response->withJson($game, $code);
 
     } catch (\Throwable $e) {
         $code = 500;
@@ -168,7 +176,8 @@ $app->post('/members', function (Request $request, Response $response, array $ar
     try {
         $code = 200;
         $postData = $request->getParsedBody();
-        $memberController = new MemberController($this->db);
+        $memberController = $this->MembersController;
+        // $memberController = new MemberController($this->logger, $this->db);
         $members = $memberController->add($postData);
         $response = $response->withJson($members, $code);
 
@@ -182,14 +191,13 @@ $app->post('/members', function (Request $request, Response $response, array $ar
     return $response;
 });
 
-$app->post('/videogames', function (Request $request, Response $response, array $args) {
+$app->post('/games', function (Request $request, Response $response, array $args) {
 
     try {
         $code = 200;
         $postData = $request->getParsedBody();
-        $videogameController = new VideogameController($this->db);
-        $videogame = $videogameController->add($postData);
-        $response = $response->withJson($videogame, $code);
+        $game = $this->GamesController->add($postData);
+        $response = $response->withJson($game, $code);
 
     } catch (\Throwable $e) {
         $code = 500;
