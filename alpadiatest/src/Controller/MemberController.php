@@ -12,6 +12,7 @@ class MemberController
 {
     private $logger;
     public $code = 200;
+    public $errors = [];
 
     public function __construct(LoggerInterface $logger, Builder $table)
     {
@@ -24,6 +25,7 @@ class MemberController
         $member = $this->Member->add($data);
         if (empty($member)) {
             $this->code = 400;
+            $this->errors = $this->Member->getErrors();
         };
         return $member;
     }

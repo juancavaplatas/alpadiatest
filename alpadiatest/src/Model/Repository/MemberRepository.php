@@ -5,24 +5,24 @@ namespace Alpadia\Models\Repositories;
 use Alpadia\Models\Entities\Member as Member;
 use Alpadia\Models\Entities\Game as Game;
 use Alpadia\Models\Factories\MemberFactory as MemberFactory;
+use Alpadia\Models\Repositories\Repository as Repository;
 use Alpadia\Models\Repositories\RepositoryInterface as RepositoryInterface;
-use Illuminate\Database\Query\Builder as Builder;
+use Illuminate\Database\QueryException as QueryException;
 
-class MemberRepository implements RepositoryInterface
+class MemberRepository extends Repository implements RepositoryInterface
 {
-    protected $table;
-
-    public function __construct(Builder $table)
-    {
-        $this->table = $table;
-    }
-
     public function add(array $data) : array
     {
         $member = MemberFactory::createFromArray($data);
-        if ($member->save()) {
-            return $member->toArray();
-        };
+        try {
+            if ($member->save()) {
+                return $member->toArray();
+            }
+
+        } catch (QueryException $e) {
+            $this->queryErrors[] = $e->errorInfo[2];
+        }
+
         return [];
     }
 

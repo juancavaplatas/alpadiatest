@@ -13,8 +13,6 @@ class ErrorHandler
             "file" => $e->getFile(),
             "line" => $e->getLine()
         ];
-        print_r($error);
-        exit;
         return $error;
     }
 }

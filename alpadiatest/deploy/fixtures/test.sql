@@ -56,8 +56,8 @@ CREATE TABLE `members_videogames` (
   PRIMARY KEY (`id`),
   KEY `fk_members_idx` (`member_id`),
   KEY `fk_videogames_idx` (`videogame_id`),
-  CONSTRAINT `fk_members` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_videogames` FOREIGN KEY (`videogame_id`) REFERENCES `videogames` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_members` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `fk_videogames` FOREIGN KEY (`videogame_id`) REFERENCES `videogames` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -81,7 +81,7 @@ DROP TABLE IF EXISTS `videogames`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `videogames` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
+  `name` varchar(45) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
