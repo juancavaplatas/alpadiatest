@@ -65,7 +65,7 @@ Response (200):
         }
     ]
 
-### GET members/id
+### GET members/{id}
 Request
 - Type: GET
 - URL: localhost:8080/members/5
@@ -79,9 +79,9 @@ Response (200):
         "email": "bonscott@acdc.com",
         "created": "2018-02-01 20:33:12",
         "modified": "2018-02-01 20:33:12"
-    }
+    }i
 
-### GET members/id/games
+### GET members/{id}/games
 Request:
 - Type: GET
 - URL: localhost:8080/members/5/games
@@ -131,7 +131,7 @@ Response (200):
         }
     ]
 
-### GET games/id
+### GET games/{id}
 Request
 - Type: GET
 - URL: localhost:8080/games/1
@@ -200,7 +200,7 @@ Response (200):
         "id": 20
     }
 
-### POST members/id/games/game_id
+### POST members/{id}/games/{game_id}
 Request
 - Type: POST
 - URL: localhost:8080/members/5/games/7
@@ -210,11 +210,13 @@ Post data
     {
     }
 
+Tip: Don't send anything in the post data.
+
 Response (200):
 
     1
     
-### PATCH members/id
+### PATCH members/{id}
 Request
 - Type: PATCH
 - URL: localhost:8080/members/9
@@ -240,7 +242,7 @@ Response (200):
         "modified": "2018-02-01 21:10:03"
     }
     
-### PATCH games/id
+### PATCH games/{id}
 Request
 - Type: PATCH
 - URL: localhost:8080/games/20
@@ -267,3 +269,36 @@ Response (200):
         "created": "2018-02-01 20:58:44",
         "modified": "2018-02-01 21:07:56"
     }
+
+### DELETE members/{id}
+Request
+- Type: DELETE
+- URL: localhost:8080/members/9
+
+Response (200):
+    
+    {
+    }
+
+### DELETE games/{id}
+Request
+- Type: DELETE
+- URL: localhost:8080/games/20
+
+Response (200):
+    
+    {
+    }
+
+### DELETE members/{id}/games/{game_id}
+Request
+- Type: DELETE
+- URL: localhost:8080/members/5/games/5
+
+Response (200):
+    
+    {
+    }
+    
+Tip: A 200 response code is a successful response  
+
