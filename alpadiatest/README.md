@@ -43,7 +43,7 @@ Request:
 - Type: GET
 - URL: localhost:8080/members
 
-Response:
+Response (200):
 
     [
         {
@@ -70,7 +70,7 @@ Request
 - Type: GET
 - URL: localhost:8080/members/5
 
-Response:
+Response (200):
 
     {
         "id": 5,
@@ -86,7 +86,7 @@ Request:
 - Type: GET
 - URL: localhost:8080/members/5/games
 
-Response:
+Response (200):
 
     [
         {
@@ -111,7 +111,7 @@ Request:
 - Type: GET
 - URL: localhost:8080/games
 
-Response:
+Response (200):
 
     [
         {
@@ -136,7 +136,7 @@ Request
 - Type: GET
 - URL: localhost:8080/games/1
 
-Response
+Response (200):
 
     {
         "id": 1,
@@ -161,7 +161,7 @@ Post data
 
 Tip: Don't forget any field. The email must be unique.
 
-Response
+Response (200):
 
     {
         "name": "Freddy",
@@ -180,8 +180,8 @@ Request
 Post data
 
     {
-        name: "Super Street Fighter",
-        company: "Sony"
+        "name": "Super Street Fighter",
+        "company": "Sony"
     }
 
 Tip: The company name is restricted to the next values:
@@ -190,7 +190,7 @@ Tip: The company name is restricted to the next values:
 - Sony
 - Microsoft
 
-Response
+Response (200):
 
     {
         "name": "Super Street Fighter",
@@ -200,4 +200,70 @@ Response
         "id": 20
     }
 
+### POST members/id/games/game_id
+Request
+- Type: POST
+- URL: localhost:8080/members/5/games/7
 
+Post data
+
+    {
+    }
+
+Response (200):
+
+    1
+    
+### PATCH members/id
+Request
+- Type: PATCH
+- URL: localhost:8080/members/9
+
+Post data
+
+    {
+        "name": "Freddy",
+        "surname": "Mercury",
+        "email": "freddymercury7@queen.com"
+    }
+
+Tip: The email must be unique.
+
+Response (200):
+
+    {
+        "id": 9,
+        "name": "Freddy",
+        "surname": "Mercury",
+        "email": "freddymercury7@queen.com",
+        "created": "2018-02-01 21:00:53",
+        "modified": "2018-02-01 21:10:03"
+    }
+    
+### PATCH games/id
+Request
+- Type: PATCH
+- URL: localhost:8080/games/20
+
+Post data
+
+    {
+        "name": "Super Street Fighter",
+        "company": "Nintendo"
+    }
+
+Tip: The company name is restricted to the next values:
+- Nintendo
+- SEGA
+- Sony
+- Microsoft
+
+Response (200):
+
+    {
+        "id": 20,
+        "name": "Super Street Fighter",
+        "company": "Nintendo",
+        "created": "2018-02-01 20:58:44",
+        "modified": "2018-02-01 21:07:56"
+    }
