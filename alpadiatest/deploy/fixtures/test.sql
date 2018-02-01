@@ -26,6 +26,7 @@ CREATE TABLE `members` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `surname` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL UNIQUE,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -38,8 +39,8 @@ CREATE TABLE `members` (
 
 LOCK TABLES `members` WRITE;
 /*!40000 ALTER TABLE `members` DISABLE KEYS */;
-INSERT INTO `members` VALUES (1,'Juan','Cava','2017-01-01 00:00:00','2017-01-01 00:00:00');
-INSERT INTO `members` VALUES (2,'Ricardo','Navarro','2017-01-01 00:00:00','2017-01-01 00:00:00');
+INSERT INTO `members` VALUES (1,'Juan','Cava','juan@gmail.com','2017-01-01 00:00:00','2017-01-01 00:00:00');
+INSERT INTO `members` VALUES (2,'Ricardo','Navarro','ricardo@gmail.com','2017-01-01 00:00:00','2017-01-01 00:00:00');
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 UNLOCK TABLES;
 --

@@ -76,10 +76,15 @@ class MemberRepository extends Repository implements RepositoryInterface
 
     public function update(int $id, array $data) : array
     {
-        $updated = Member::where(["id" => $id])->update($data);
-        if ($updated) {
-            return $this->find($id);
+        try {
+            $updated = Member::where(["id" => $id])->update($data);
+            if ($updated) {
+                return $this->find($id);
+            }
+        } catch (QueryException $e) {
+            $this->queryErrors[] = $e->errorInfo[2];
         }
+
         return [];
     }
 }

@@ -49,6 +49,7 @@ class MembersTest extends BaseTestCase
             0 => [
                 "name" => "Juan",
                 "surname" => "Cava",
+                "email" => "juan@gmail.com",
                 "created" => "2017-01-01 00:00:00",
                 "modified" => "2017-01-01 00:00:00",
                 "id" => 1
@@ -73,6 +74,7 @@ class MembersTest extends BaseTestCase
             "id" => 1,
             "name" => "Juan",
             "surname" => "Cava",
+            "email" => "juan@gmail.com",
             "created" => "2017-01-01 00:00:00",
             "modified" => "2017-01-01 00:00:00"
         ];
@@ -125,19 +127,29 @@ class MembersTest extends BaseTestCase
 
     public function testPost()
     {
-        // Mock request
         $data = [
             "name" => "Javier",
-            "surname" => "Garcia"
+            "surname" => "Garcia",
+            "email" => "javier@gmail.com"
         ];
+
+        // Mock 400 request
+        $badData = $data;
+        $badData["email"] = "juan@gmail.com";
+        $response = $this->runApp('POST', $this->baseUrl, $badData);
+        $body = json_decode((string)$response->getBody(), true);
+        $this->assertEquals(400, $response->getStatusCode());
+
+        // Mock 200 request
         $response = $this->runApp('POST', $this->baseUrl, $data);
         $body = json_decode((string)$response->getBody(), true);
         // Make assertions
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertInternalType("array", $body);
-        $this->assertEquals(3, $body["id"]);
+        $this->assertEquals(4, $body["id"]);
         $this->assertEquals($data["name"], $body["name"]);
         $this->assertEquals($data["surname"], $body["surname"]);
+        $this->assertEquals($data["email"], $body["email"]);
         $this->assertInternalType("string", $body["created"]);
         $this->assertInternalType("string", $body["modified"]);
     }

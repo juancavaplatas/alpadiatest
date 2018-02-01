@@ -203,10 +203,9 @@ $app->post('/members/{id}/games/{game_id}', function (Request $request, Response
 $app->post('/members', function (Request $request, Response $response, array $args) {
 
     try {
-        $code = 200;
         $postData = $request->getParsedBody();
-        $memberController = $this->MembersController;
-        $members = $memberController->add($postData);
+        $members = $this->MembersController->add($postData);
+        $code = $this->MembersController->code;
         $response = $response->withJson($members, $code);
 
     } catch (\Throwable $e) {
