@@ -2,7 +2,9 @@
 
 namespace Alpadia\Models\Entities;
 
-class Member
+use Alpadia\Models\Entities\Entity as Entity;
+
+class Member extends Entity
 {
 }
 

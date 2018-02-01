@@ -45,6 +45,14 @@ class VideogameFactory
         // Return new videogame
         return $videogame;
     }
+
+    public static function createErrorEntity()
+    {
+        // Create new videogame
+        $videogame = new Videogame();
+        $videogame->setError(true);
+        return $videogame;
+    }
 }
 
 ?>

@@ -48,10 +48,14 @@ class VideogameModel
         return $data;
     }
 
-    public function update(Member $data) : Member
+    public function update(int $id, array $data) : Videogame
     {
-        $id = $this->db->update( get_object_vars($data) );
-        $data->id = $id;
+        // Update
+        $updated = $this->db->updateOrInsert( ["id" => $id], $data);
+        if ($updated) {
+            return $this->find($id);
+        }
+
         return $data;
     }
 }

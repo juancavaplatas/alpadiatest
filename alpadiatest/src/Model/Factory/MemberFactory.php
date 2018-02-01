@@ -45,6 +45,14 @@ class MemberFactory
         // Return new member
         return $member;
     }
+
+    public static function createErrorEntity()
+    {
+        // Create new member
+        $member = new Member();
+        $member->setError(true);
+        return $member;
+    }
 }
 
 ?>

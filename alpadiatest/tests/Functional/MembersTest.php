@@ -120,7 +120,10 @@ class MembersTest extends BaseTestCase
         // Make assertions
         $this->assertEquals(200, $response->getStatusCode());
         $expected = [
+            "name" => "Juan",
             "surname" => "Cava Platas",
+            "created" => "2017-01-01 00:00:00",
+            "modified" => "2017-01-01 00:00:00",
             "id" => 1
         ];
         $this->assertEquals($expected, $body);

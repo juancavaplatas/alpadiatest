@@ -37,9 +37,7 @@ class MemberController
 
     public function update(int $id, array $data)
     {
-        $member = MemberFactory::createFromArray($data);
-        $member->id = $id;
-        return $this->Member->update($member);
+        return $this->Member->update($id, $data);
     }
 }
 

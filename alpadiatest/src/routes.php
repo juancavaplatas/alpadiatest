@@ -129,8 +129,27 @@ $app->patch('/members/{id}', function (Request $request, Response $response, arr
         $code = 200;
         $postData = $request->getParsedBody();
         $memberController = new MemberController($this->db);
-        $members = $memberController->update((int)$args["id"], $postData);
-        $response = $response->withJson($members, $code);
+        $member = $memberController->update((int)$args["id"], $postData);
+        $response = $response->withJson($member, $code);
+
+    } catch (\Throwable $e) {
+        $code = 500;
+        $error = ErrorHandler::getErrorMessage($e);
+        $response = $response->withJson($error, $code);
+    }
+
+    // return response
+    return $response;
+});
+
+$app->patch('/videogames/{id}', function (Request $request, Response $response, array $args) {
+
+    try {
+        $code = 200;
+        $postData = $request->getParsedBody();
+        $videogameController = new VideogameController($this->db);
+        $videogame = $videogameController->update((int)$args["id"], $postData);
+        $response = $response->withJson($videogame, $code);
 
     } catch (\Throwable $e) {
         $code = 500;

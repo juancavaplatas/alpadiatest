@@ -2,7 +2,9 @@
 
 namespace Alpadia\Models\Entities;
 
-class Videogame
+use Alpadia\Models\Entities\Entity as Entity;
+
+class Videogame extends Entity
 {
 }
 

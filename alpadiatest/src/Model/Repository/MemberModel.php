@@ -48,15 +48,14 @@ class MemberModel
         return $data;
     }
 
-    public function update(Member $data) : Member
+    public function update(int $id, array $data) : Member
     {
-        $id = $data->id;
-        unset($data->id);
-        $return = $this->db->updateOrInsert( ["id" => $id], get_object_vars($data) );
+        // Update
+        $updated = $this->db->updateOrInsert( ["id" => $id], $data);
+        if ($updated) {
+            return $this->find($id);
+        }
 
-        
-
-        exit;
         return $data;
     }
 }
