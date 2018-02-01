@@ -42,7 +42,31 @@ If you are using the default built-in PHP server, your API will be available on 
 - Type: GET
 - URL: localhost:8080/members
 - Response
-[
+
+    [
+        {
+            "id": 5,
+            "name": "Bon",
+            "surname": "Scott",
+            "email": "bonscott@acdc.com",
+            "created": "2018-02-01 20:33:12",
+            "modified": "2018-02-01 20:33:12"
+        },
+        {...},
+        {
+            "id": 8,
+            "name": "Axl",
+            "surname": "Rose",
+            "email": "axlrose@gunsnroses.com",
+            "created": "2018-02-01 20:34:52",
+            "modified": "2018-02-01 20:34:52"
+        }
+    ]
+
+### GET members/id
+- Type: GET
+- URL: localhost:8080/members/5
+- Response
     {
         "id": 5,
         "name": "Bon",
@@ -50,40 +74,26 @@ If you are using the default built-in PHP server, your API will be available on 
         "email": "bonscott@acdc.com",
         "created": "2018-02-01 20:33:12",
         "modified": "2018-02-01 20:33:12"
-    },
-    {...},
-    {
-        "id": 8,
-        "name": "Axl",
-        "surname": "Rose",
-        "email": "axlrose@gunsnroses.com",
-        "created": "2018-02-01 20:34:52",
-        "modified": "2018-02-01 20:34:52"
     }
-]
 
-### GET members/id
+### GET games
 - Type: GET
-- URL: localhost:8080/members/5
+- URL: localhost:8080/games
 - Response
-{
-    "id": 5,
-    "name": "Bon",
-    "surname": "Scott",
-    "email": "bonscott@acdc.com",
-    "created": "2018-02-01 20:33:12",
-    "modified": "2018-02-01 20:33:12"
-}
-
-### GET members
-- Type: GET
-- URL: localhost:8080/members/5
-- Response
-{
-    "id": 5,
-    "name": "Bon",
-    "surname": "Scott",
-    "email": "bonscott@acdc.com",
-    "created": "2018-02-01 20:33:12",
-    "modified": "2018-02-01 20:33:12"
-}
+    [
+        {
+            "id": 1,
+            "name": "Sonic the Hedgehog",
+            "company": "SEGA",
+            "created": "2018-02-01 19:12:51",
+            "modified": "2018-02-01 19:12:51"
+        },
+        {...}
+        {
+            "id": 19,
+            "name": "Wind Jammers",
+            "company": "Nintendo",
+            "created": "2018-02-01 19:18:50",
+            "modified": "2018-02-01 19:18:50"
+        }
+    ]
