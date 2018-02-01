@@ -2,7 +2,7 @@
 
 namespace Alpadia\Controllers;
 
-use Alpadia\Models\Repositories\Game as Game;
+use Alpadia\Models\Entities\Game as Game;
 use Alpadia\Models\Factories\VideogameFactory as GameFactory;
 use Psr\Log\LoggerInterface;
 use Illuminate\Database\Query\Builder;

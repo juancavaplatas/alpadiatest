@@ -2,9 +2,8 @@
 
 namespace Alpadia\Controllers;
 
-use Alpadia\Models\Repositories\Member as Member;
+use Alpadia\Models\Entities\Member as Member;
 use Alpadia\Models\Factories\MemberFactory as MemberFactory;
-use Alpadia\Models\Repositories\MemberModel as MemberModel;
 
 use Psr\Log\LoggerInterface;
 use Illuminate\Database\Query\Builder as Builder;
