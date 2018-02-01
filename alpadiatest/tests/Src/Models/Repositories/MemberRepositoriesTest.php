@@ -79,6 +79,42 @@ class MemberRepositoryTest extends TestCase
         $this->assertInternalType("string",$result["modified"]);
     }
 
+    public function test_get()
+    {
+        $result = $this->Member->get();
+        $this->assertInternalType("array", $result);
+        $this->assertEquals(3, count($result));
+        $this->assertEquals(["id","name","surname","created","modified"], array_keys($result[0]));
+        $this->assertInternalType("int",$result[0]["id"]);
+        $this->assertEquals(1,$result[0]["id"]);
+        $this->assertInternalType("string",$result[0]["name"]);
+        $this->assertEquals("Juan",$result[0]["name"]);
+        $this->assertInternalType("string",$result[0]["surname"]);
+        $this->assertEquals("Cava Platas",$result[0]["surname"]);
+        $this->assertInternalType("string",$result[0]["created"]);
+        $this->assertInternalType("string",$result[0]["modified"]);
+    }
+
+    public function test_update()
+    {
+        $data = [
+            "name" => "John"
+        ];
+
+        $result = $this->Member->update(1000, $data);
+        $this->assertInternalType("array",$result);
+        $this->assertEquals([], $result);
+
+        $result = $this->Member->update(1, $data);
+        $this->assertEquals(1,$result["id"]);
+        $this->assertInternalType("string",$result["name"]);
+        $this->assertEquals("John",$result["name"]);
+        $this->assertInternalType("string",$result["surname"]);
+        $this->assertEquals("Cava Platas",$result["surname"]);
+        $this->assertInternalType("string",$result["created"]);
+        $this->assertInternalType("string",$result["modified"]);
+    }
+
     public function test_delete()
     {
         // bad request

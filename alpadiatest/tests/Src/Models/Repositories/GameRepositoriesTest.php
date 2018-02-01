@@ -55,6 +55,57 @@ class GameRepositoryTest extends TestCase
         $this->assertInternalType("string",$result["modified"]);
     }
 
+    public function test_find()
+    {
+        // item doesn't exists
+        $result = $this->Game->find(1000);
+        $this->assertInternalType("array", $result);
+        $this->assertEquals([], $result);
+
+        // item exists
+        $result = $this->Game->find(1);
+        $this->assertInternalType("array", $result);
+        $this->assertEquals(["id","name","created","modified"], array_keys($result));
+        $this->assertInternalType("int",$result["id"]);
+        $this->assertEquals(1,$result["id"]);
+        $this->assertInternalType("string",$result["name"]);
+        $this->assertEquals("Megaman",$result["name"]);
+        $this->assertInternalType("string",$result["created"]);
+        $this->assertInternalType("string",$result["modified"]);
+    }
+
+    public function test_get()
+    {
+        $result = $this->Game->get();
+        $this->assertInternalType("array", $result);
+        $this->assertEquals(5, count($result));
+        $this->assertEquals(["id","name","created","modified"], array_keys($result[0]));
+        $this->assertInternalType("int",$result[0]["id"]);
+        $this->assertEquals(1,$result[0]["id"]);
+        $this->assertInternalType("string",$result[0]["name"]);
+        $this->assertEquals("Megaman",$result[0]["name"]);
+        $this->assertInternalType("string",$result[0]["created"]);
+        $this->assertInternalType("string",$result[0]["modified"]);
+    }
+
+    public function test_update()
+    {
+        $data = [
+            "name" => "Parodius"
+        ];
+
+        $result = $this->Game->update(1000, $data);
+        $this->assertInternalType("array",$result);
+        $this->assertEquals([], $result);
+
+        $result = $this->Game->update(1, $data);
+        $this->assertEquals(1,$result["id"]);
+        $this->assertInternalType("string",$result["name"]);
+        $this->assertEquals("Parodius",$result["name"]);
+        $this->assertInternalType("string",$result["created"]);
+        $this->assertInternalType("string",$result["modified"]);
+    }
+
     public function test_delete()
     {
         // bad request
