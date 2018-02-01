@@ -25,41 +25,11 @@ php composer.phar start
 ## Endpoint specification
 After the installation you should be able to try accessing to the API endpoints (We recommend using Postman for this purpose). Any other request to the API out of this endpoints will receive a 40x response.
 
-GET /members
-Get the list of all members
-
-GET /members/{id}
-Get a member data
-
-GET /members/{id}/games
-Get a member games collection
-
-GET /games
-Get the list of all games
-
-GET /games/{id}
-Get a game data
-
-PATCH /members/{id}
-Updates a member info
-
-PATCH /games/{id}
-Updates a game data
-
-POST /members
-Creates a new member
-
-POST /members/{id}/games
-Adds one or more games to the member collection
-
-POST /games
-Creates a new game
-
-DELETE /members/{id}
-Deletes a member
-
-DELETE /members/{member_id}/games/{game_id}
-Deletes a game from the member collection
-
-DELETE /games/{id}
-Deletes a game
+| HTTP METHOD   | POST              | GET          | PATCH         | PUT         | DELETE          |
+| ------------- | ----------------- | ------------ | ------------- | ----------- | --------------- |
+| /members      | Create new member | List members | Not allowed   | Not allowed | Not allowed     |
+| /members/{id} | Not allowed       | Get member   | Update member | Not allowed | Delete a member |
+| /games        | Create new game   | List games   | Not allowed   | Not allowed | Not allowed     |
+| /games/{id}   | Not allowed       | Get game     | Update game   | Not allowed | Delete a game   |
+| /members/{id}/games | Adds one or more games to the member | Get member games collection   | Not allowed | Not allowed | Not allowed |
+| /members/{id}/games/{game_id} | Not allowed | Not allowed | Not allowed | Not allowed | Deletes a game from the member collection |
