@@ -2,7 +2,12 @@
 
 The project is developed using the micro-framework SlimPHP. The application allows to the user to consult, write and delete information from a SQL database through a RESTful API.
 
-The API accepts JSON and x-www-form-urlencoded requests, returning a JSON formatted response in both cases.  
+The API accepts JSON and x-www-form-urlencoded requests, returning a JSON formatted response in both cases.
+
+The code source, located in the src folder, is distributed in the next parts:
+- Routes and settings: The files dependencies, middleware, routes and settings are in charge to configure the environment and define wich methods we should use for our endpoints.
+- Controller: Our business logic is defined by these classes.
+- Model: Our data model layer is defined by these classes. We are using an interface as repository and the Eloquent ORM clases to manage our data model.
 
 ## Install the Application
 This project includes the source code, the sql dump and the composer.phar file (we will use it to start and configure our project). First of all, check if you have the correct version of the software dependencies using the command in the root folder:
@@ -12,6 +17,10 @@ php composer.phar update
 It is possible that you may need to give permissions to the logs folder. We are going to drop some lines here so add read/write permissions:
 ```
 sudo chmod -R 755 logs/
+```
+A MySQL dump file with the schema and a dataset is present in the root folder (dump.sql). If you are on a LAMP LINUX environment, you can import the database executing the next command line:
+```
+sudo mysql -u {{username}} -p {{yourdatabase}} < dump.sql
 ```
 The project has two development environments, local and test. Your local configuration is defined in the deploy/settings/local.php. Please, modify here your database access and execute the next command:
 ```
@@ -215,7 +224,7 @@ Tip: Don't send anything in the post data.
 Response (200):
 
     1
-    
+
 ### PATCH members/{id}
 Request
 - Type: PATCH
@@ -241,7 +250,7 @@ Response (200):
         "created": "2018-02-01 21:00:53",
         "modified": "2018-02-01 21:10:03"
     }
-    
+
 ### PATCH games/{id}
 Request
 - Type: PATCH
@@ -276,7 +285,7 @@ Request
 - URL: localhost:8080/members/9
 
 Response (200):
-    
+
     {
     }
 
@@ -286,7 +295,7 @@ Request
 - URL: localhost:8080/games/20
 
 Response (200):
-    
+
     {
     }
 
@@ -296,9 +305,8 @@ Request
 - URL: localhost:8080/members/5/games/5
 
 Response (200):
-    
+
     {
     }
-    
-Tip: A 200 response code is a successful response  
 
+Tip: A 200 response code is a successful response  
