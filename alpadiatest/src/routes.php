@@ -24,6 +24,23 @@ $app->delete('/members/{id}', function (Request $request, Response $response, ar
     return $response;
 });
 
+$app->delete('/members/{member_id}/games/{game_id}', function (Request $request, Response $response, array $args) {
+
+    try {
+        $this->MembersController->deleteGame((int)$args["member_id"],(int)$args["game_id"]);
+        $code = $this->MembersController->code;
+        $response = $response->withStatus($code);
+
+    } catch (\Throwable $e) {
+        $code = 500;
+        $error = ErrorHandler::getErrorMessage($e);
+        $response = $response->withJson($error, $code);
+    }
+
+    // return response
+    return $response;
+});
+
 $app->delete('/games/{id}', function (Request $request, Response $response, array $args) {
 
     try {
@@ -166,13 +183,30 @@ $app->patch('/games/{id}', function (Request $request, Response $response, array
 });
 
 // POST ========================================================================
+$app->post('/members/{id}/games', function (Request $request, Response $response, array $args) {
+
+    try {
+        $postData = $request->getParsedBody();
+        $members = $this->MembersController->addGames((int)$args["id"], $postData);
+        $code = $this->MembersController->code;
+        $response = $response->withJson($members, $code);
+
+    } catch (\Throwable $e) {
+        $code = 500;
+        $error = ErrorHandler::getErrorMessage($e);
+        $response = $response->withJson($error, $code);
+    }
+
+    // return response
+    return $response;
+});
+
 $app->post('/members', function (Request $request, Response $response, array $args) {
 
     try {
         $code = 200;
         $postData = $request->getParsedBody();
         $memberController = $this->MembersController;
-        // $memberController = new MemberController($this->logger, $this->db);
         $members = $memberController->add($postData);
         $response = $response->withJson($members, $code);
 

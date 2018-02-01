@@ -2,27 +2,25 @@
 
 namespace Alpadia\Models\Factories;
 
-use \stdClass as stdClass;
 use Alpadia\Models\Entities\Member as Member;
 
 class MemberFactory
 {
-    public static function createFromArray(array $array)
+    /**
+     * Create new entity from array
+     * Create an empty entity and then fill it with the array data
+     * @param array $array Data
+     * @return Member Member entity
+     */
+    public static function createFromArray(array $array) : Member
     {
-        // Create new member
         $member = new Member();
-
-        // Fill new member
         foreach($array as $property => $value)
         {
             $member->$property = $value;
             unset($array->$property);
         }
-
-        // Unset values
         unset($value);
-
-        // Return new member
         return $member;
     }
 }

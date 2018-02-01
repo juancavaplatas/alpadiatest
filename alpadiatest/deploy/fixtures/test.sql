@@ -53,13 +53,11 @@ CREATE TABLE `members_videogames` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `member_id` int(11) NOT NULL,
   `videogame_id` int(11) NOT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_members_idx` (`member_id`),
   KEY `fk_videogames_idx` (`videogame_id`),
   CONSTRAINT `fk_members` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_videogames` FOREIGN KEY (`videogame_id`) REFERENCES `members_videogames` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_videogames` FOREIGN KEY (`videogame_id`) REFERENCES `videogames` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -69,7 +67,8 @@ CREATE TABLE `members_videogames` (
 
 LOCK TABLES `members_videogames` WRITE;
 /*!40000 ALTER TABLE `members_videogames` DISABLE KEYS */;
-INSERT INTO `members_videogames` VALUES (1,1,1,'2017-01-01 00:00:00','2017-01-01 00:00:00');
+INSERT INTO `members_videogames` VALUES (1,1,1);
+INSERT INTO `members_videogames` VALUES (2,1,4);
 /*!40000 ALTER TABLE `members_videogames` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,6 +96,8 @@ LOCK TABLES `videogames` WRITE;
 /*!40000 ALTER TABLE `videogames` DISABLE KEYS */;
 INSERT INTO `videogames` VALUES (1,'Sonic the Hedgehog','2017-01-01 00:00:00','2017-01-01 00:00:00');
 INSERT INTO `videogames` VALUES (2,'Megaman','2017-01-01 00:00:00','2017-01-01 00:00:00');
+INSERT INTO `videogames` VALUES (3,'Street Fighter','2017-01-01 00:00:00','2017-01-01 00:00:00');
+INSERT INTO `videogames` VALUES (4,'Tetris','2017-01-01 00:00:00','2017-01-01 00:00:00');
 /*!40000 ALTER TABLE `videogames` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

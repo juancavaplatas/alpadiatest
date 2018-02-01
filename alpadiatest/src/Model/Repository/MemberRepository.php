@@ -3,6 +3,7 @@
 namespace Alpadia\Models\Repositories;
 
 use Alpadia\Models\Entities\Member as Member;
+use Alpadia\Models\Entities\Game as Game;
 use Alpadia\Models\Factories\MemberFactory as MemberFactory;
 use Alpadia\Models\Repositories\RepositoryInterface as RepositoryInterface;
 use Illuminate\Database\Query\Builder as Builder;
@@ -25,11 +26,32 @@ class MemberRepository implements RepositoryInterface
         return [];
     }
 
+    public function addGames(int $id, array $game_ids) : int
+    {
+        $member = Member::where(["id"=>$id])->first();
+        if ( isset($member) ) {
+            foreach ($game_ids as $game_id) {
+                $updated = $member->games()->attach((int)$game_id);
+            }
+            return 1;
+        }
+        return 0;
+    }
+
     public function delete(int $id) : int
     {
         $member = Member::where(["id"=>$id])->first();
         if ( isset($member) ) {
             return $member->delete();
+        }
+        return 0;
+    }
+
+    public function deleteGame(int $id, int $game_id) : int
+    {
+        $member = Member::where(["id"=>$id])->first();
+        if ( isset($member) ) {
+            return $member->games()->detach($game_id);
         }
         return 0;
     }

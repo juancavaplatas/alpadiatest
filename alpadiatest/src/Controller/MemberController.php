@@ -28,6 +28,15 @@ class MemberController
         return $member;
     }
 
+    public function addGames(int $id, array $game_ids)
+    {
+        $updated = $this->Member->addGames($id, $game_ids);
+        if (!$updated) {
+            $this->code = 204;
+        }
+        return $updated;
+    }
+
     public function delete(int $id)
     {
         $deleted = $this->Member->delete($id);
@@ -35,6 +44,15 @@ class MemberController
             $this->code = 204;
         }
         return $deleted;
+    }
+
+    public function deleteGame(int $member_id, int $game_id)
+    {
+        $updated = $this->Member->deleteGame($member_id, $game_id);
+        if (!$updated) {
+            $this->code = 204;
+        }
+        return $updated;
     }
 
     public function find(int $id): array

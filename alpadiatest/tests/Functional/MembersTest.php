@@ -23,6 +23,21 @@ class MembersTest extends BaseTestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
+    public function testDeleteIdGamesId()
+    {
+        // Mock 204 request
+        $response = $this->runApp('DELETE', $this->baseUrl . '/1000/games/4');
+        $this->assertEquals(204, $response->getStatusCode());
+
+        // Mock 204 request
+        $response = $this->runApp('DELETE', $this->baseUrl . '/1/games/1000');
+        $this->assertEquals(204, $response->getStatusCode());
+
+        // Mock 200 request
+        $response = $this->runApp('DELETE', $this->baseUrl . '/1/games/4');
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
     public function testGet()
     {
         // Mock request
@@ -140,6 +155,21 @@ class MembersTest extends BaseTestCase
         $this->assertEquals(405, $response->getStatusCode());
     }
 
+    public function testPostIdGames()
+    {
+        // Mock request
+        $data = [3];
+        $response = $this->runApp('POST', $this->baseUrl . "/1/games", $data);
+        $body = json_decode((string)$response->getBody(), true);
+        // Make assertions
+        $this->assertEquals(200, $response->getStatusCode());
+
+        // Mock 204 request
+        $response = $this->runApp('POST', $this->baseUrl . "/1000/games", $data);
+        $body = json_decode((string)$response->getBody(), true);
+        // Make assertions
+        $this->assertEquals(204, $response->getStatusCode());
+    }
 
     public function testPut()
     {
